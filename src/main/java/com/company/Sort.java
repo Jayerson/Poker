@@ -1,4 +1,4 @@
-package com.company;
+package main.java.com.company;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,7 +22,7 @@ public class Sort {
 
     public static int giveValue(String card) {
         int value = 0;
-        if (card.charAt(0) < 58 || card.charAt(0) > 48) {
+        if (card.charAt(0) < 58 && card.charAt(0) > 48) {
             value = card.charAt(0) -48;
         }
         value = switch (card.split("")[0]) {
@@ -94,27 +94,27 @@ public class Sort {
         return score;
     }
 
-    public static void compareHands() {
+    public static int[] compareHands(ArrayList<Card> LeftHand, ArrayList<Card> RightHand) {
 
         // if the scores are different
-        if (score(thisLeftHand) > score(thisRightHand)) {
+        if (score(LeftHand) > score(RightHand)) {
             finalScoreCount[0]++;
-        } else if (score(thisLeftHand) < score(thisRightHand)) {
+        } else if (score(LeftHand) < score(RightHand)) {
             finalScoreCount[1]++;
         } else {
-            switch (score(thisLeftHand)) { // if the scores match
+            switch (score(LeftHand)) { // if the scores match
 
                 case 5, 7, 8, 9, 10:
                     // compare higher rank first - some wash out quick
-                    if (thisLeftHand.get(2).value > thisRightHand.get(2).value) {
+                    if (LeftHand.get(2).value > RightHand.get(2).value) {
                         finalScoreCount[0]++;
-                    } else if (thisLeftHand.get(2).value < thisRightHand.get(2).value) {
+                    } else if (LeftHand.get(2).value < RightHand.get(2).value) {
                         finalScoreCount[1]++;
                     } else { // compare the low-ranking value
-                        int l2 = thisLeftHand.get(2).value == thisLeftHand.get(4).value ?
-                                thisLeftHand.get(4).value : thisLeftHand.get(0).value;
-                        int r2 = thisRightHand.get(2).value == thisRightHand.get(4).value ?
-                                thisRightHand.get(4).value : thisRightHand.get(0).value;
+                        int l2 = LeftHand.get(2).value == LeftHand.get(4).value ?
+                                LeftHand.get(4).value : LeftHand.get(0).value;
+                        int r2 = RightHand.get(2).value == RightHand.get(4).value ?
+                                RightHand.get(4).value : RightHand.get(0).value;
                         if (l2 > r2) {
                             finalScoreCount[0]++;
                         } else {
@@ -124,28 +124,28 @@ public class Sort {
                     break;
 
                 case 4: // three of a kind
-                    if (thisLeftHand.get(2).value > thisRightHand.get(2).value) {
+                    if (LeftHand.get(2).value > RightHand.get(2).value) {
                         finalScoreCount[0]++;
                         System.out.print("\n");
-                    } else if (thisLeftHand.get(2).value < thisRightHand.get(2).value) {
+                    } else if (LeftHand.get(2).value < RightHand.get(2).value) {
                         finalScoreCount[1]++;
                         System.out.print("\n");
                     } else { // get non-ranking values
                         int[] leftArr = {0, 0};
                         int[] rightArr = {0, 0};
                         for (int i = 4; i >= 0; i--) {
-                            if (thisLeftHand.get(i).value != thisLeftHand.get(2).value) {
+                            if (LeftHand.get(i).value != LeftHand.get(2).value) {
                                 if (leftArr[0] == 0) {
-                                    leftArr[0] = thisLeftHand.get(i).value;
+                                    leftArr[0] = LeftHand.get(i).value;
                                 } else {
-                                    leftArr[1] = thisLeftHand.get(i).value;
+                                    leftArr[1] = LeftHand.get(i).value;
                                 }
                             }
-                            if (thisRightHand.get(i).value != thisRightHand.get(2).value) {
+                            if (RightHand.get(i).value != RightHand.get(2).value) {
                                 if (rightArr[0] == 0) {
-                                    rightArr[0] = thisRightHand.get(i).value;
+                                    rightArr[0] = RightHand.get(i).value;
                                 } else {
-                                    rightArr[1] = thisRightHand.get(i).value;
+                                    rightArr[1] = RightHand.get(i).value;
                                 }
                             }
                         } // then compare
@@ -165,10 +165,10 @@ public class Sort {
                     break;
 
                 case 3: // two pair - 3 values each
-                    int[] leftArr = Pairs.twoPairs(thisLeftHand);
-                    int[] rightArr = Pairs.twoPairs(thisRightHand);
+                    int[] leftArr = Pairs.twoPairs(LeftHand);
+                    int[] rightArr = Pairs.twoPairs(RightHand);
 
-                    // comparison
+                    // comparison loop
                     for (int i = 0; i < 3; i++) {
                         if (leftArr[i] > rightArr[i]) {
                             finalScoreCount[0]++;
@@ -185,8 +185,8 @@ public class Sort {
                     break;
 
                 case 2: // pair - 4 values
-                    leftArr = Pairs.onePair(thisLeftHand);
-                    rightArr = Pairs.onePair(thisRightHand);
+                    leftArr = Pairs.onePair(LeftHand);
+                    rightArr = Pairs.onePair(RightHand);
 
                     // ready, steady, loop!
                     for (int i = 0; i < 4; i++) {
@@ -205,11 +205,11 @@ public class Sort {
                     break;
                 default:
                     for (int i = 4; i >= 0; i--) {
-                        if (thisLeftHand.get(i).value > thisRightHand.get(i).value) {
+                        if (LeftHand.get(i).value > RightHand.get(i).value) {
                             finalScoreCount[0]++;
                             break;
                         }
-                        if (thisLeftHand.get(i).value < thisRightHand.get(i).value) {
+                        if (LeftHand.get(i).value < RightHand.get(i).value) {
                             finalScoreCount[1]++;
                             break;
                         }
@@ -219,9 +219,10 @@ public class Sort {
         }
 //        System.out.printf("Player 1: %d hands, Player 2: %d hands\n",
 //                finalScoreCount[0], finalScoreCount[1]);
+    return finalScoreCount;
     }
 
-    public static void makeHands() {
+    public static void makeHands() throws sortingError {
 
         Scanner input = new Scanner(System.in);
         String fileName = input.nextLine();
@@ -231,6 +232,8 @@ public class Sort {
             hands = new FileReader(fileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            throw new sortingError("That file doesn't appear to exist," +
+                    "please check your entry carefully");
         }
         // initial test file input
         Scanner inFile = new Scanner(hands);
@@ -271,7 +274,7 @@ public class Sort {
 //            }
 //            System.out.printf(": %s vs %s : ", score(thisLeftHand), score(thisRightHand));
 
-            compareHands();
+            compareHands(thisLeftHand, thisRightHand);
         }
         System.out.printf("Player 1: %d hands\nPlayer 2: %d hands",
                 finalScoreCount[0], finalScoreCount[1]);

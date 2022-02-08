@@ -1,4 +1,8 @@
 # Poker
 
-This file can be run as a jar. Please place your text file in the same directory.
-It will request the file to be read in with all further necessary instructions.
+This repo contains an executable .jar file. Please place your text file of cards in the same directory for easier access.
+It will request the name of the file to be read in.
+
+Example: from any command line (windows, linux, OSX):
+
+Path/Of/Jar> java -jar Poker.jar

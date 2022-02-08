@@ -1,13 +1,14 @@
-package com.company;
+package main.java.com.company;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws sortingError {
         System.out.printf("Please enter the file name in full (including file extension)\n");
         Sort.makeHands();
+
 //        Card one = new Card ('T','H',10);
 //        Card two = new Card ('J','C',11);
 //        Card three = new Card ('Q','S',12);
