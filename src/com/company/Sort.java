@@ -223,9 +223,12 @@ public class Sort {
 
     public static void makeHands() {
 
+        Scanner input = new Scanner(System.in);
+        String fileName = input.nextLine();
+
         FileReader hands = null;
         try {
-            hands = new FileReader("poker-hands.txt");
+            hands = new FileReader(fileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
